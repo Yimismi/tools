@@ -5,7 +5,7 @@ go build main.go
 mkdir target
 mkdir target/tools
 mkdir target/tools/bin
-mv bootstrap target
+mv bootstrap target/tools
 cd target/tools
 cp  -r ../../config ./
 cp  -r ../../web ./
