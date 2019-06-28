@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>sql2go</title>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="/css/highlight.min.css">
+    <link rel="stylesheet" href="/css/common.css">
+    <script src="/js/jquery-3.3.1.min.js"></script>
+    <script src="/js/highlight.min.js"></script>
+    <script src="/js/sql2go.js"></script>
+</head>
+<body>
+<header>
+    <div class="intro">
+        <div class="title">
+            <h1>SQL-to-Go</h1>
+            <h2>Convert MySQL to Go Statement</h2>
+        </div>
+        <div>
+            <p>
+                This tool converts create statement of <b>mysql</b> into Go type definition, and other SQL expressions
+                will be ignored. Paste create statement on the left and the equivalent Go type will be generated to
+                the right, which you can paste into your program. The script has to make some assumptions, so
+                double-check the output!
+            </p>
+            <p>
+                For an example, try converting create statement from the <a href="javascript:" id="sample1">MYSQL-DOC</a>.
+            </p>
+            <p style="text-align:center;">
+                &bull; <a href="https://github.com/Yimismi/tools">View on GitHub</a> &bull;
+            </p>
+        </div>
+    </div>
+</header>
+<table>
+    <tr>
+        <th style="width: 45%;">Sql</th>
+        <th style="width: 10%; font-size: 22px;">&#8594;</th>
+        <th style="width: 45%;">Go <!--label><input type="checkbox" id="inline" checked>Inline type definitions</label--></th>
+    </tr>
+</table>
+<table>
+    <tr>
+        <td style="width: 50%;">
+            <div id="input" contenteditable></div>
+        </td>
+        <td style="width: 50%;">
+            <div id="output"></div>
+        </td>
+    </tr>
+</table>
+
+<footer>
+    &copy; 2019 Yimismi
+    <br>
+    The night is dark and full of terrors.
+</footer>
+</body>
+</html>
