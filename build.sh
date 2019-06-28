@@ -11,4 +11,5 @@ cp  -r ../../config ./
 cp  -r ../../web ./
 cp ../../stop.sh ./bin
 cp ../../restart.sh ./bin
+cp ../../Dockerfile .
 cd -

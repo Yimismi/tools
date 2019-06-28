@@ -1,5 +1,3 @@
 #!/bin/sh
-sh /var/local/tools/stop.sh
-cd /var/local/tools
-/var/local/tools/bootstrap > /dev/null &
-cd -
+sh /var/local/tools/bin/stop.sh
+exec /var/local/tools/bootstrap > /dev/null &
