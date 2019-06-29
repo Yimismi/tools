@@ -34,7 +34,10 @@ func Run(confPath string) {
 	r.Run(conf.Port)
 }
 func setLog(conf *ServerConfig) {
-	f, _ := os.Create(path.Join(conf.LogRoot, "gin.log"))
+	f, err := os.Create(path.Join(conf.LogRoot, "gin.log"))
+	if err != nil {
+		panic(err)
+	}
 	gin.DefaultWriter = io.MultiWriter(f)
 }
 func loadConfig(confPath string) *ServerConfig {
