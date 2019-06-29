@@ -16,7 +16,7 @@
             <h1>SQL-to-Go</h1>
             <h2>Convert MySQL to Go Statement</h2>
         </div>
-        <div>
+        <div class>
             <p>
                 This tool converts create statement of <b>mysql</b> into Go type definition, and other SQL expressions
                 will be ignored. Paste create statement on the left and the equivalent Go type will be generated to
@@ -30,16 +30,20 @@
                 &bull; <a href="https://github.com/Yimismi/tools">View on GitHub</a> &bull;
             </p>
         </div>
+        <div id = "options_div">
+            <label>Options:</label>
+            <table id = "options"></table>
+        </div>
     </div>
 </header>
-<table>
+<table class="body_table">
     <tr>
         <th style="width: 45%;">Sql</th>
         <th style="width: 10%; font-size: 22px;">&#8594;</th>
-        <th style="width: 45%;">Go <!--label><input type="checkbox" id="inline" checked>Inline type definitions</label--></th>
+        <th style="width: 45%;">Go</th>
     </tr>
 </table>
-<table>
+<table class="body_table">
     <tr>
         <td style="width: 50%;">
             <div id="input" contenteditable></div>

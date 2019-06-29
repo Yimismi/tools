@@ -20,12 +20,37 @@ header {
     padding: 20px;
 }
 
+#options_div {
+    margin: 0 1%;
+}
+
+#options_div table {
+    table-layout:fixed;
+}
+
+#options_div td {
+    font-size: 15px;
+    padding: 5px;
+}
+
+select {
+    padding: 0 3%;
+    margin: 0;
+    width: 70%;
+}
+
+table input {
+    width: 70%;
+    padding: 0 3%;
+    margin: 0;
+}
+
 .intro {
     display: flex;
 }
 
 .intro > div {
-    width: 33.333%;
+    width: 33.33333%;
 }
 
 h1 {
@@ -59,7 +84,7 @@ table {
     table-layout: fixed;
 }
 
-th {
+.body_table th {
     padding: 15px;
     background: #375EAB;
     text-align: center;
@@ -142,3 +167,4 @@ footer {
         display: block;
     }
 }
+

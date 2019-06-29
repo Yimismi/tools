@@ -37,7 +37,7 @@ $(function()
             return;
         }
 
-        let output = getGo(input);
+        let output = getGo(input, getArgs());
 
         if (!!output.error) {
             console.log(output.error);
@@ -102,7 +102,7 @@ $(function()
     $('#inline').change(function()
     {
         doConversion();
-    })
+    });
 
     // Highlights the output for the user
     $('#output').click(function()
@@ -155,7 +155,8 @@ $(function()
             xhr = new XMLHttpRequest();
             xhr.open("POST", getUrlRelativePath(), false);
             xhr.setRequestHeader('content-type', 'application/json');
-            reqBody = JSON.stringify(getRequest(src, args))
+            reqBody = JSON.stringify(getRequest(src, args));
+            console.log(reqBody);
             xhr.send(reqBody);
             return JSON.parse(xhr.responseText)
         } else {
@@ -185,4 +186,83 @@ $(function()
         return relUrl;
     }
 
+    $(document).ready(function(){
+        var ops = getOps();
+        let opsNode = $("#options");
+        console.log(ops);
+        if (!ops) {
+            $("#options_div").remove();
+            return
+        } 
+        ops.forEach(function (item) {
+
+            var argsNode = newArgsList(item.Name, item.Desc, item.DefaultValue, item.Type, item.Optional);
+            console.log(item.Name, argsNode);
+            opsNode.append(argsNode)
+        });
+        opsNode.show();
+        $('.arg_value').change(function()
+        {
+            doConversion();
+        });
+    });
+    
+    function newArgsList(name, desc, defaultValue, vType, options) {
+        var argsNode = $("<tr>").attr("id", "args_" + name);
+        var argsName = $("<td>").append($("<label>").attr("class", "arg_name").text(name + ":")).css({"width": "33%"});
+        var typeNode = $("<td>").append($("<label>").text(vType));
+        var input;
+        if (!!options) {
+            input = $("<select>");
+            options.forEach(function (item) {
+                input.append("<option value=" + item + ">" + item + "</option>");
+            });
+            input.val(defaultValue);
+        } else {
+            input = $("<input>").attr("type", "text");
+            input.val(defaultValue);
+        }
+        input.attr("arg_name", name).attr("class", "arg_value").attr("type", vType);
+        input = $("<td>").append(input);
+        argsNode.append(argsName, input, typeNode);
+        return argsNode;
+
+    }
+
+    function getOps() {
+        xhr = xhrRequest();
+        if (!!xhr) {
+            xhr = new XMLHttpRequest();
+            xhr.open("GET", "/args/" + toolName, false);
+            xhr.send();
+            return JSON.parse(xhr.responseText)
+        } else {
+            return {}.error = "xhr error";
+        }
+    }
+    function getArgs() {
+        var optionNode = $("#options_div");
+        if (!optionNode) {
+            return null;
+        }
+        var argsList = $(".arg_value", optionNode);
+        var args = {};
+        argsList.each(function (index, item) {
+            var type = $(item).attr("type").toLowerCase();
+            var value = $(item).val();
+            if (type === "int" || type === "long") {
+                value = parseInt(value);
+            } else if (type === "bool") {
+                if (value.toLowerCase() === "true") {
+                    value = true;
+                } else {
+                    value = false;
+                }
+            } else if (type === "float" || type === "double") {
+                value = parseFloat(value);
+            }
+            args[$(item).attr("arg_name")] = value;
+        });
+        return args
+    }
 });

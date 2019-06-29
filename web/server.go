@@ -72,7 +72,7 @@ func loadWebTool(r *gin.Engine) {
 		r.POST(tool.GetUrl(), func(context *gin.Context) {
 			webProcessor(name, context)
 		})
-		r.POST(path.Join(tool.GetUrl(), "args"), func(context *gin.Context) {
+		r.GET(path.Join("/args", tool.GetName()), func(context *gin.Context) {
 			context.JSON(http.StatusOK, tool.GetArgsDesc())
 		})
 	}
