@@ -166,7 +166,7 @@ $(function()
     }
 
     function getRequest(src, args) {
-        a = {};
+        var a = {};
         a.src = src;
         Object.assign(a, args);
         return a;
@@ -195,9 +195,11 @@ $(function()
             return
         } 
         ops.forEach(function (item) {
-
-            var argsNode = newArgsList(item.Name, item.Desc, item.DefaultValue, item.Type, item.Optional);
-            console.log(item.Name, argsNode);
+            var dfn = handleLocalStorage("get", item.Name);
+            if (dfn === null || dfn === undefined) {
+                dfn = item.DefaultValue;
+            }
+            var argsNode = newArgsList(item.Name, item.Desc, dfn, item.Type, item.Optional);
             opsNode.append(argsNode)
         });
         opsNode.show();
@@ -262,7 +264,27 @@ $(function()
                 value = parseFloat(value);
             }
             args[$(item).attr("arg_name")] = value;
+            handleLocalStorage("set", $(item).attr("arg_name"), value);
         });
         return args
     }
-});
+
+    function handleLocalStorage(method, key, value) {
+        switch (method) {
+            case 'get' : {
+                let temp = window.localStorage.getItem(key);
+                return temp
+            }
+            case 'set' : {
+                window.localStorage.setItem(key, value);
+                break
+            }
+            case 'remove': {
+                window.localStorage.removeItem(key);
+                break
+            }
+            default : {
+                return false
+            }
+        }
+    }});
