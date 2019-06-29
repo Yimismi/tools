@@ -21,7 +21,7 @@ var sql2goToolArgsDesc = []*tool.ArgDesc{
 	{Name: "table_prefix", Type: "string", DefaultValue: "", Desc: "表名前缀"},
 	{Name: "gen_json", Type: "bool", DefaultValue: "false", Desc: "是否产生json tag，模板类型为go_xorm时生效", Optional: []bool{true, false}},
 	{Name: "tmpl", Type: "string", DefaultValue: "go_xorm", Desc: "模板类型", Optional: []string{"go_xorm", "go"}},
-	{Name: "package_name", Type: "string", DefaultValue: "db", Desc: "包名", Optional: []string{"db", "go"}},
+	{Name: "package_name", Type: "string", DefaultValue: "db", Desc: "包名"},
 }
 
 func init() {
