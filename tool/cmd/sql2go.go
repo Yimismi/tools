@@ -65,7 +65,7 @@ func (t *Sql2goTool) Exec(args *Sql2goToolArgs) ([]byte, error) {
 func (t *Sql2goTool) Run(ctx *gin.Context) {
 	args := NewSql2goToolArgs()
 	err := ctx.BindJSON(args)
-	log.Infof("--ip:%v....req:%v\n", args)
+	log.Infof("--ip:%v....req:%v\n", ctx.ClientIP(), args)
 	if err != nil {
 		ctx.JSON(200, map[string]string{"error": err.Error()})
 		return
