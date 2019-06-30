@@ -19,10 +19,11 @@ type WebTool interface {
 	ToolInterface
 	Run(ctx *gin.Context)
 }
+
 type Tool struct {
-	Name string
-	Url  string
-	Desc string
+	Name string `toml:"name"`
+	Url  string `toml:"url"`
+	Desc string `toml:"desc"`
 }
 
 func (t Tool) GetName() string {

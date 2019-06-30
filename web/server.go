@@ -1,10 +1,10 @@
 package web
 
 import (
-	"fmt"
 	"github.com/BurntSushi/toml"
 	"github.com/Yimismi/tools/tool"
 	"github.com/gin-gonic/gin"
+	"github.com/ngaut/log"
 	"io"
 	"net/http"
 	"os"
@@ -14,8 +14,9 @@ import (
 var webTool map[string]tool.WebTool
 
 type ServerConfig struct {
-	Port    string `toml:"port"`
-	LogRoot string `toml:"log_root"`
+	Port         string      `toml:"port"`
+	LogRoot      string      `toml:"log_root"`
+	ExternalTool []tool.Tool `toml:"external_tool"`
 }
 
 func init() {
@@ -29,7 +30,7 @@ func Run(confPath string) {
 	conf := loadConfig(confPath)
 	setLog(conf)
 	r := gin.Default()
-	loadStaticFs(r)
+	loadStaticFs(r, conf)
 	loadWebTool(r)
 	r.Run(conf.Port)
 }
@@ -45,18 +46,19 @@ func loadConfig(confPath string) *ServerConfig {
 	sc := new(ServerConfig)
 	_, err := toml.DecodeFile(filePath, sc)
 	if err != nil {
-		fmt.Println(err)
+		panic(err)
 		return nil
 	} else {
-		fmt.Println(sc)
+		log.Infof("load config succeed:\n%+v\n", sc)
 	}
 	return sc
 }
-func loadStaticFs(r *gin.Engine) {
+func loadStaticFs(r *gin.Engine, conf *ServerConfig) {
 	r.LoadHTMLGlob("./web/view/*.tmpl")
 	r.GET("/index", func(c *gin.Context) {
 		c.HTML(http.StatusOK, "index.tmpl", gin.H{
-			"Tools": webTool,
+			"Tools":   webTool,
+			"ExTools": conf.ExternalTool,
 		})
 	})
 	r.GET("/", func(c *gin.Context) {
