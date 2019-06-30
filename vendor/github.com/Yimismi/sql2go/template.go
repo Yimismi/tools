@@ -21,6 +21,7 @@ var (
 	errNoComparison           error
 	created, updated, deleted []string
 	supportComment            bool
+	snakeMapper               core.SnakeMapper
 )
 
 func init() {
@@ -67,6 +68,7 @@ type {{TableMapper .Name}} struct {
 	errNoComparison = errors.New("missing argument for comparison")
 	created, updated, deleted = []string{"created_at"}, []string{"updated_at"}, []string{"deleted_at"}
 	supportComment = true
+	snakeMapper = core.SnakeMapper{}
 }
 
 type convertArgs struct {
@@ -308,7 +310,9 @@ func getTag(mapper core.IMapper, genJson bool) func(table *core.Table, col *core
 		res = append(res, nstr, "'"+col.Name+"'")
 		var tags []string
 		if genJson {
-			tags = append(tags, "json:\""+col.Name+"\"")
+			jsonName := mapper.Table2Obj(col.Name)
+			jsonName = snakeMapper.Obj2Table(jsonName)
+			tags = append(tags, "json:\""+jsonName+"\"")
 		}
 		if len(res) > 0 {
 			tags = append(tags, "xorm:\""+strings.Join(res, " ")+"\"")
