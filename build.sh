@@ -1,7 +1,6 @@
 #!/bin/sh
 rm -rf ./target
 go build bootstrap.go
-go build main.go
 mkdir target
 mkdir target/tools
 mkdir target/tools/bin

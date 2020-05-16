@@ -1,14 +1,17 @@
-FROM centos
-
-WORKDIR /var/local/tools
+FROM golang:1.13
+WORKDIR /go/src/tools
 
 # Copy the directory contents into the container at /var/local
-COPY . /var/local/tools
+COPY . .
 
+RUN go mod download
+
+RUN sh ./build.sh
+
+RUN sh ./install.sh
 
 EXPOSE 8080
 
 # Define environment variable
 ENV NAME TOOLS
-
-CMD ["sh", "./bin/restart.sh"]
+CMD ["sh", "/var/local/tools/bin/restart.sh"]
