@@ -15,6 +15,7 @@ type Sql2goToolArgs struct {
 	GenJson     bool   `json:"gen_json"`
 	GenXorm     bool   `json:"gen_xorm"`
 	PackageName string `json:"package_name"`
+	OtherTags   string `json:"other_tags"`
 }
 
 var sql2goToolArgsDesc = []*tool.ArgDesc{
@@ -23,6 +24,7 @@ var sql2goToolArgsDesc = []*tool.ArgDesc{
 	{Name: "gen_json", Type: "bool", DefaultValue: "true", Desc: "是否产生json tag", Optional: []bool{true, false}},
 	{Name: "gen_xorm", Type: "bool", DefaultValue: "true", Desc: "是否产生xorm tag", Optional: []bool{true, false}},
 	{Name: "package_name", Type: "string", DefaultValue: "db", Desc: "包名"},
+	{Name: "other_tags", Type: "string", DefaultValue: "", Desc: "tags"},
 }
 
 func init() {
@@ -39,7 +41,7 @@ type Sql2goTool struct {
 }
 
 func NewSql2goToolArgs() *Sql2goToolArgs {
-	return &Sql2goToolArgs{"", "", "", true, true, "db"}
+	return &Sql2goToolArgs{"", "", "", true, true, "db", ""}
 }
 
 func (t *Sql2goTool) GetArgsDesc() []*tool.ArgDesc {
@@ -56,7 +58,8 @@ func (t *Sql2goTool) Exec(args *Sql2goToolArgs) ([]byte, error) {
 		SetTablePrefix(args.TablePrefix).
 		SetGenJson(args.GenJson).
 		SetPackageName(args.PackageName).
-		SetGenXorm(args.GenXorm)
+		SetGenXorm(args.GenXorm).
+		SetOtherTags(args.OtherTags)
 	return sql2go.FromSql(args.Sql, a)
 }
 func (t *Sql2goTool) Run(ctx *gin.Context) {
