@@ -4,6 +4,8 @@ WORKDIR /go/src/tools
 # Copy the directory contents into the container at /var/local
 COPY . .
 
+RUN go env -w GOPROXY=https://goproxy.cn,direct
+
 RUN go mod download
 
 RUN sh ./build.sh
