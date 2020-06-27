@@ -23,7 +23,6 @@ var sql2goToolArgsDesc = []*tool.ArgDesc{
 	{Name: "table_prefix", Type: "string", DefaultValue: "", Desc: "表名前缀"},
 	{Name: "gen_json", Type: "bool", DefaultValue: "true", Desc: "是否产生json tag", Optional: []bool{true, false}},
 	{Name: "gen_xorm", Type: "bool", DefaultValue: "true", Desc: "是否产生xorm tag", Optional: []bool{true, false}},
-	{Name: "package_name", Type: "string", DefaultValue: "db", Desc: "包名"},
 	{Name: "other_tags", Type: "string", DefaultValue: "", Desc: "tags"},
 }
 
@@ -57,7 +56,6 @@ func (t *Sql2goTool) Exec(args *Sql2goToolArgs) ([]byte, error) {
 		SetColPrefix(args.ColPrefix).
 		SetTablePrefix(args.TablePrefix).
 		SetGenJson(args.GenJson).
-		SetPackageName(args.PackageName).
 		SetGenXorm(args.GenXorm).
 		SetOtherTags(args.OtherTags)
 	return sql2go.FromSql(args.Sql, a)
